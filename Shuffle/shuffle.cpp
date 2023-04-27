@@ -4,13 +4,13 @@
 #include <iostream>
 #include <cstdio>
 
-char outfile[256] = "c:/temp/shuffled-benjamin.binpack";
+char outfile[256] = "c:/temp/shuffled-benjamin.binpack";	// output binpack
 char tempdir[256] = "c:/temp/";
 
-char files[20][100] = {
+char files[20][100] = {						// put your to shuffle binpacks here
    "c:/temp/benjamin-001.binpack",
    "c:/temp/benjamin-002.binpack",
-   "xxx" };
+   "xxx" };							// end of table marker
 
 FILE *fpc;
 char w[200],fn[200],buf1[100],buf2[100],buf3[100];
@@ -160,7 +160,7 @@ done:  	fclose(fp1);
 		for (x = 1; x <= p; x++) { sprintf(w, "%sp%d.bin",tempdir,x); remove(w); }
 
 		printf("\nPress 'enter' to exit program  ");
-        gets_s(w);
+        	gets_s(w);
 
 		return 0;
 }
