@@ -128,7 +128,7 @@ done:  	fclose(fp1);
 
 		display_time();
 		
-		printf("\nEnd of of Phase One, created %d shuffled binpacks\n,p");
+		printf("\nEnd of of Phase One, created %d shuffled binpacks\n",p);
 		printf("Phase Two now will merge them together into %s\n", outfile);
 		printf("Feel free to abort if this is unwanted\n\n");
 
