@@ -4,9 +4,12 @@
 #include <iostream>
 #include <cstdio>
 
+char outfile[256] = "c:/temp/shuffled-benjamin.binpack";
+char tempdir[256] = "c:/temp/";
+
 char files[20][100] = {
-   "test1.binpack",
-   "test2.binpack",
+   "c:/temp/benjamin-001.binpack",
+   "c:/temp/benjamin-002.binpack",
    "xxx" };
 
 FILE *fpc;
@@ -18,6 +21,7 @@ int x, y;
 unsigned long long zettel;
 unsigned long long k1,k2,k3,k4,k5;
 int n = 0;
+int p = 0;
 int t1, t2, time_taken;
 FILE* fp, * fp1, * fp2, * fp3, * fp4, * fp5, * fp6, * fp7, * fp8, * fp9, * fp10, * fp11, * fp12;
 
@@ -34,18 +38,18 @@ int main(int argc, char *argv[]) {
         fpc=fopen(fn,"rb");	          
         if (fpc==0) { printf("File %s not present, do your homework ",fn);  gets_s(w); exit(1); }
 	  	
-		fp1 = fopen("p1.bin", "wb");
-		fp2 = fopen("p2.bin", "wb");
-		fp3 = fopen("p3.bin", "wb");
-		fp4 = fopen("p4.bin", "wb");
-		fp5 = fopen("p5.bin", "wb");
-		fp6 = fopen("p6.bin", "wb");
-		fp7 = fopen("p7.bin", "wb");
-		fp8 = fopen("p8.bin", "wb");
-		fp9 = fopen("p9.bin", "wb");
-		fp10 = fopen("p10.bin", "wb");
-		fp11 = fopen("p11.bin", "wb");
-		fp12 = fopen("p12.bin", "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir,p);	fp1 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp2 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp3 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp4 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp5 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp6 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp7 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp8 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp9 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp10 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp11 = fopen(w, "wb");
+		p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp12 = fopen(w, "wb");
 
 		printf("\nShuffling %s\n",fn);
 
@@ -59,7 +63,22 @@ lees:   x=fread(&k1,8,1,fpc); if (x<1) { fclose(fpc); goto klaar; }
 
 		if (binpacks % 1000000 == 0) { zettel = binpacks; puntjes(); printf("Shuffling %s\n", buf2); }	// each one million
 
-		if (binpacks % 100000000 == 0) display_time();	// each 100 million
+		if (binpacks % 100000000 == 0) {
+			display_time();	// each 100 million
+			fclose(fp1); fclose(fp2);	fclose(fp3); fclose(fp4); fclose(fp5); 	fclose(fp6); fclose(fp7);
+			fclose(fp8); fclose(fp9);	fclose(fp10); fclose(fp11); fclose(fp12);
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp1 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp2 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp3 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp4 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp5 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp6 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp7 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp8 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp9 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp10 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp11 = fopen(w, "wb");
+			p++;  sprintf(w, "%sp%d.bin", tempdir, p);	fp12 = fopen(w, "wb"); }
 
 		switch (count) {
 		case 1: { fwrite(&k1, 8, 1, fp1); fwrite(&k2, 8, 1, fp1); fwrite(&k3, 8, 1, fp1); fwrite(&k4, 8, 1, fp1); fwrite(&k5, 8, 1, fp1); goto lees; }
@@ -86,6 +105,8 @@ klaar:  n++;
 		fpc = fopen(fn, "rb");
 		if (fpc == 0) { printf("File %s not present, do your homework ", fn);  gets_s(w); exit(1); }
 
+		printf("\nShuffling %s\n", fn);
+
 		goto lees;
 
 
@@ -107,26 +128,36 @@ done:  	fclose(fp1);
 
 		display_time();
 		
-		printf("\nWriting 'shuffled.binpack'");
+		printf("\nEnd of of Phase One, created %d shuffled binpacks\n,p");
+		printf("Phase Two now will merge them together into %s\n", outfile);
+		printf("Feel free to abort if this is unwanted\n\n");
 
-		system("copy /b p1.bin + p2.bin + p3.bin + p4.bin + p5.bin + p6.bin + p7.bin + p8.bin + p9.bin + p10.bin + p11.bin + p12.bin shuffled.binpack");
+		printf("Writing %s\n",outfile);
 
-		printf("\nDone, shuffled : %s binpacks, saved as 'shuffled.binpack'\n\n",buf2);
+//		printf(w, "copy /b p* xxx.binpack");	works as copied .exe in folder but not when started under Visual Studio
+//		printf("%s\n", w);
+//		system(w);
+
+		fpc = fopen(outfile, "wb");
+
+		for (y = 1; y <= p; y++) {
+			sprintf(w, "%sp%d.bin", tempdir, y);
+			fp1 = fopen(w, "rb");
+			while (feof(fp1) == 0) {
+			    x = fread(&k1, 8, 1, fp1);  if (x < 1) break;
+				fread(&k2, 8, 1, fp1);  fread(&k3, 8, 1, fp1);  fread(&k4, 8, 1, fp1);  fread(&k5, 8, 1, fp1); verify++;
+				fwrite(&k1, 8, 1, fpc); fwrite(&k2, 8, 1, fpc); fwrite(&k3, 8, 1, fpc); fwrite(&k4, 8, 1, fpc); fwrite(&k5, 8, 1, fpc);	}
+			fclose(fp1);
+			zettel = verify; puntjes(); printf("Stored %s of %s\n", buf2, buf3); }
+
+		fclose(fpc);
+
+		printf("\nDone, shuffled : %s binpacks, saved as %s\n\n",buf3,outfile);
 
 		display_time();
 
-		remove("p1.bin");
-		remove("p2.bin");
-		remove("p3.bin");
-		remove("p4.bin");
-		remove("p5.bin");
-		remove("p6.bin");
-		remove("p7.bin");
-		remove("p8.bin");
-		remove("p9.bin");
-		remove("p10.bin");
-		remove("p11.bin");
-		remove("p12.bin");
+		printf("Removing temp files\n");
+		for (x = 1; x <= p; x++) { sprintf(w, "%sp%d.bin",tempdir,x); remove(w); }
 
 		printf("\nPress 'enter' to exit program  ");
         gets_s(w);
@@ -142,6 +173,8 @@ void display_time()					// input  = time_taken in seconds
 	t2 = clock();
 	t2 = t2 - t1;
 	time_taken = t2 / CLOCKS_PER_SEC;
+
+	if (time_taken == 0) time_taken++;
 
 	zettel = binpacks / time_taken;
 	puntjes();
