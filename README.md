@@ -11,7 +11,7 @@ OPERATION
 <pre>
 BENCHMARK HDD  [AMD Ryzen 5 3600]
 File   Size    Positions    Phase-1  Phase-2
-test  23.8Gb  640.921.471
+test  23.8Gb  640.921.471    11:39    
 
 BENCHMARK SSD  [AMD Ryzen 5 3600]
 File   Size    Positions    Phase-1  Phase-2
