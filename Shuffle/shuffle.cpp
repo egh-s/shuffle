@@ -166,7 +166,7 @@ done:  	fclose(fp1);
 }
 
 void display_time()					// input  = time_taken in seconds
-									// output = buf1 -> time + NPS
+							// output = buf1 -> time + NPS
 {
 	int h, m, s;
 	
@@ -193,10 +193,10 @@ void display_time()					// input  = time_taken in seconds
 }
 
 void puntjes()						// input = zettel
-									// output= string buf2
+							// output= string buf2
 {
-	int l, x;						// uses string buf1
-									// max = 111.234.567.890
+	int l, x;					// uses string buf1
+							// max = 111.234.567.890
 	sprintf(buf1, "%lld", zettel);
 
 	l = strlen(buf1);
